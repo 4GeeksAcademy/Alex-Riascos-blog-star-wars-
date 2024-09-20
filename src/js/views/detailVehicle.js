@@ -3,14 +3,14 @@ import { Context } from "../store/appContext";
 import { useParams, useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 
-const DetailCard = () => {
+const DetailVehicle = () => {
 
     const { store, actions } = useContext(Context);
-    const { people_id } = useParams();
+    const { vehicle_id } = useParams();
     const [character, setCharacter] = useState(null);
 
     const fetchCharacter = async () => {
-        const urlApi = `https://www.swapi.tech/api/people/${people_id}`;
+        const urlApi = `https://www.swapi.tech/api/vehicles/${vehicle_id}`;
         try {
             const response = await fetch(`${urlApi}`);
             const data = await response.json();
@@ -31,10 +31,11 @@ const DetailCard = () => {
 
             <div className="d-flex">
                 <img style={{ minWidth: "380px", height: "400px" }}
-                    src={`https://starwars-visualguide.com/assets/img/characters/${people_id}.jpg`} />
+                    src={`https://starwars-visualguide.com/assets/img/vehicles/${vehicle_id}.jpg`} />
 
                 <div className="mx-auto p-5 ">
                     {character && <h1 className="text-center">{character.result.properties.name}</h1>}
+
                     {!character && <p className="text-center">...loading</p>}
 
 
@@ -46,33 +47,33 @@ const DetailCard = () => {
                 {character &&
                     <>
                         <p className="text-center" style={{ color: "red" }}>
-                            Name: <br />
+                            Name <br />
                             {character.result.properties.name}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Birth Year: <br />
-                            {character.result.properties.birth_year}
+                            Model <br />
+                            {character.result.properties.model}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Gender: <br />
-                            {character.result.properties.gender}
+                            Vehicle class <br />
+                            {character.result.properties.vehicle_class}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Height: <br />
-                            {character.result.properties.height}
+                            Max atmosphering speed <br />
+                            {character.result.properties.max_atmosphering_speed}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Skin Color: <br />
-                            {character.result.properties.skin_color}
+                            Consumables <br />
+                            {character.result.properties.consumables}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Eye Color: <br />
-                            {character.result.properties.eye_color}
+                            Passengers <br />
+                            {character.result.properties.passengers}
                         </p>
                     </>
                 }
@@ -82,5 +83,4 @@ const DetailCard = () => {
 };
 
 
-export default DetailCard;
-
+export default DetailVehicle;

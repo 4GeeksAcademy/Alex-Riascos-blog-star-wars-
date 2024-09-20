@@ -3,26 +3,28 @@ import { Context } from "../store/appContext";
 import { useParams, useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 
-const DetailCard = () => {
+const DetailPlanet = () => {
 
     const { store, actions } = useContext(Context);
-    const { people_id } = useParams();
-    const [character, setCharacter] = useState(null);
+    const { planet_id } = useParams();
+    const [characterPlanet, setCharacterPlanet] = useState(null);
 
-    const fetchCharacter = async () => {
-        const urlApi = `https://www.swapi.tech/api/people/${people_id}`;
+    const fetchCharacterPlanet = async () => {
+
+        let urlApi = `https://www.swapi.tech/api/planets/${planet_id}`;
+
+
         try {
             const response = await fetch(`${urlApi}`);
             const data = await response.json();
-            setCharacter(data)
-
+            setCharacterPlanet(data)
         } catch (err) {
             console.error(err);
         }
     }
     useEffect(() => {
 
-        fetchCharacter();
+        fetchCharacterPlanet();
     }, []);
 
 
@@ -31,11 +33,13 @@ const DetailCard = () => {
 
             <div className="d-flex">
                 <img style={{ minWidth: "380px", height: "400px" }}
-                    src={`https://starwars-visualguide.com/assets/img/characters/${people_id}.jpg`} />
+                    src={planet_id == '1'
+                        ? `https://starwars-visualguide.com/assets/img/placeholder.jpg`
+                        : `https://starwars-visualguide.com/assets/img/planets/${planet_id}.jpg`} />
 
                 <div className="mx-auto p-5 ">
-                    {character && <h1 className="text-center">{character.result.properties.name}</h1>}
-                    {!character && <p className="text-center">...loading</p>}
+                    {characterPlanet && <h1 className="text-center">{characterPlanet.result.properties.name}</h1>}
+                    {!characterPlanet && <p className="text-center">...loading</p>}
 
 
 
@@ -43,36 +47,36 @@ const DetailCard = () => {
                 </div>
             </div>
             <div className="d-flex justify-content-between border-top border-danger mt-3" style={{ padding: "30px" }}>
-                {character &&
+                {characterPlanet &&
                     <>
                         <p className="text-center" style={{ color: "red" }}>
-                            Name: <br />
-                            {character.result.properties.name}
+                            Name <br />
+                            {characterPlanet.result.properties.name}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Birth Year: <br />
-                            {character.result.properties.birth_year}
+                            Climate <br />
+                            {characterPlanet.result.properties.climate}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Gender: <br />
-                            {character.result.properties.gender}
+                            Population <br />
+                            {characterPlanet.result.properties.population}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Height: <br />
-                            {character.result.properties.height}
+                            Orbital period <br />
+                            {characterPlanet.result.properties.orbital_period}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Skin Color: <br />
-                            {character.result.properties.skin_color}
+                            Rotation Period <br />
+                            {characterPlanet.result.properties.rotation_period}
                         </p>
 
                         <p className="text-center" style={{ color: "red" }}>
-                            Eye Color: <br />
-                            {character.result.properties.eye_color}
+                            Diameter <br />
+                            {characterPlanet.result.properties.diameter}
                         </p>
                     </>
                 }
@@ -82,5 +86,4 @@ const DetailCard = () => {
 };
 
 
-export default DetailCard;
-
+export default DetailPlanet;
